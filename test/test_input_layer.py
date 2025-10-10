@@ -4,6 +4,8 @@ from input.input_layer import InputPlateau
 from input.input_layer import InputRover
 from input.input_layer import Instructions
 from input.input_layer import CompassDirection
+from input.input_layer import Position
+from input.input_layer import PlateauSize
 
 # Test InputPlateau 1
 def test_plateau_class_with_valid_input():
@@ -150,3 +152,34 @@ def test_start_co_ordinates_in_plateau():
     with pytest.raises(ValueError):
         test_r.check_starting_postion_in_plateau(test_p)
         assert True
+
+def test_position():
+    pos = Position('1 2 N')
+    assert pos.x == 1
+    assert pos.y == 2
+    assert pos.d == 'N'
+    
+def test_starting_position_of_rover_in_position():
+    test_r = InputRover('Rover1', '1 2 N')
+    start_position = test_r.get_valid_start_position()
+    pos = Position(start_position)
+    assert pos.x == 1
+    assert pos.y == 2
+    assert pos.d == 'N'
+
+def test_plateau_size():
+    plateau_size = PlateauSize('6 9')
+    assert plateau_size.max_x == 6
+    assert plateau_size.max_y == 9
+
+def test_plateau_size_from_input_plateau():
+    plateau = InputPlateau('55')
+    valid_plateau = plateau.make_input_valid()
+    plateau_size = PlateauSize(valid_plateau)
+    assert plateau_size.max_x == 5
+    assert plateau_size.max_y == 5
+    plateau = InputPlateau('5   5')
+    valid_plateau = plateau.make_input_valid()
+    plateau_size = PlateauSize(valid_plateau)
+    assert plateau_size.max_x == 5
+    assert plateau_size.max_y == 5

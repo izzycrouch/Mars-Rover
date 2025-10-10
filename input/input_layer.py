@@ -85,9 +85,9 @@ class InputRover():
         start_position = self.get_valid_start_position()
         plateau_coords = plateau.make_input_valid()
 
-        if start_position[0] > plateau_coords[0]:
+        if int(start_position[0]) > int(plateau_coords[0]):
             raise ValueError(f'{self.name}\'s starting x co-ordinate is not on Mars!')
-        if start_position[2] > plateau_coords[2]:
+        if int(start_position[2]) > int(plateau_coords[2]):
             raise ValueError(f'{self.name}\'s starting y co-ordinate is not on Mars!')
 
         return True
@@ -104,3 +104,14 @@ class CompassDirection(Enum):
     SOUTH = 'S'
     EAST = 'E'
     WEST = 'W'
+
+class Position():
+    def __init__(self, input):
+        self.x = int(input[0])
+        self.y = int(input[2])
+        self.d = input[4]
+
+class PlateauSize():
+    def __init__(self, plateau):
+        self.max_x = int(plateau[0])
+        self.max_y = int(plateau[2])
