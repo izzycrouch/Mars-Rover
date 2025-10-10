@@ -19,16 +19,17 @@
  It is assumed that the lower left co-ordinate is (0,0)
     
 ### 2. Rover Creation 
- The Rover receives two lines of input.\
- Line 1 - lands the Rover at a particular starting position.\
- e.g. 1 2 N lands the Rover at position (1,2) facing North.\
+ The Rover receives two lines of input.
+ ```
+ Line 1 - lands the Rover at a particular starting position. e.g. 1 2 N lands the Rover at position (1,2) facing North.
  Line 2 - a string input representing instructions to move the Rover around the Plateau.
+ ```
 
 ## Instructions
 The Rover can only be moved around the Plateau by a string of letters send to it.
 ```
- L -     Spins the Rover 90 degrees Left without moving from the current coordinate point.\
- R -  	Spins the Rover 90 degrees Right without moving from the current coordinate point.\
- M -     Moves the Rover forward by one grid point, maintaining the same heading/orientation.
+ L -    Spins the Rover 90 degrees Left without moving from the current coordinate point.
+ R -  	Spins the Rover 90 degrees Right without moving from the current coordinate point.
+ M -    Moves the Rover forward by one grid point, maintaining the same heading/orientation.
 ```
 All other letters are invalid.
