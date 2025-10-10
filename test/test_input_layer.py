@@ -2,6 +2,8 @@ import pytest
 
 from input.input_layer import InputPlateau
 from input.input_layer import InputRover
+from input.input_layer import Instructions
+from input.input_layer import CompassDirection
 
 # Test InputPlateau 1
 def test_plateau_class_with_valid_input():
@@ -131,5 +133,20 @@ def test_start_co_ordinates_raises_error_if_invalid():
         test_r.get_valid_start_position()
         assert True
     
-   
+# Test InputRover 4
+def test_start_co_ordinates_in_plateau():
+    test_r = InputRover('Rover1', '1 2 N')
+    test_p = InputPlateau('5 5')
+    assert test_r.check_starting_postion_in_plateau(test_p) == True
 
+    test_r = InputRover('Rover1', '5 6 N')
+    test_p = InputPlateau('5 5')
+    with pytest.raises(ValueError):
+        test_r.check_starting_postion_in_plateau(test_p)
+        assert True
+    
+    test_r = InputRover('Rover1', '12 6 N')
+    test_p = InputPlateau('5 5')
+    with pytest.raises(ValueError):
+        test_r.check_starting_postion_in_plateau(test_p)
+        assert True

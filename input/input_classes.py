@@ -6,3 +6,10 @@ class Rover():
     def __init__(self, name, character):
         self.name = name
         self.character = character
+
+
+class Position():
+    pass
+
+class PlateauSize():
+    pass

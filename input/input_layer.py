@@ -43,7 +43,6 @@ class InputRover():
     
         return self.name
 
-
     def get_valid_start_position(self):
         
         striped_position = []
@@ -82,17 +81,26 @@ class InputRover():
         else:
             raise ValueError('Invalid start position! Input as \'X Y D\' where X = x co-ordinate, where Y = y co-ordinate, and D = direction facing (N, S, E or W).')
 
-    def check_starting_postion_in_plateau():
-        
+    def check_starting_postion_in_plateau(self, plateau):
+        start_position = self.get_valid_start_position()
+        plateau_coords = plateau.make_input_valid()
 
-# from enum import Enum
+        if start_position[0] > plateau_coords[0]:
+            raise ValueError(f'{self.name}\'s starting x co-ordinate is not on Mars!')
+        if start_position[2] > plateau_coords[2]:
+            raise ValueError(f'{self.name}\'s starting y co-ordinate is not on Mars!')
 
-# class Instructions(Enum):
-#     LEFT = 'L'
-#     RIGHT = 'R'
-#     MOVE = 'M'
+        return True
 
-# class CompassDirection(Enum):
-#     NORTH = 'N'
-#     SOUTH = 'S'
-#     EAST = 'E'
+from enum import Enum
+
+class Instructions(Enum):
+    LEFT = 'L'
+    RIGHT = 'R'
+    MOVE = 'M'
+
+class CompassDirection(Enum):
+    NORTH = 'N'
+    SOUTH = 'S'
+    EAST = 'E'
+    WEST = 'W'
