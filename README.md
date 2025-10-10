@@ -26,9 +26,9 @@
 
 ## Instructions
 The Rover can only be moved around the Plateau by a string of letters send to it.
-'''
- L -     Spins the Rover 90 degrees Left without moving from the current coordinate point.
- R -  	Spins the Rover 90 degrees Right without moving from the current coordinate point.
+```
+ L -     Spins the Rover 90 degrees Left without moving from the current coordinate point.\
+ R -  	Spins the Rover 90 degrees Right without moving from the current coordinate point.\
  M -     Moves the Rover forward by one grid point, maintaining the same heading/orientation.
-'''
+```
 All other letters are invalid.
