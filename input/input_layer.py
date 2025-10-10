@@ -1,4 +1,4 @@
-class InputPlateau():
+class InputPlateau:
     def __init__(self, input):
         # check input can only be string
         if not isinstance(input, str):
@@ -21,7 +21,7 @@ class InputPlateau():
         self.input = valid_output
         return self.input
 
-class InputRover():
+class InputRover:
     def __init__(self, name, start_position='0 0 N'):
         # check name can only be string
         if not isinstance(name, str):
@@ -105,13 +105,13 @@ class CompassDirection(Enum):
     EAST = 'E'
     WEST = 'W'
 
-class Position():
+class Position:
     def __init__(self, input):
         self.x = int(input[0])
         self.y = int(input[2])
         self.d = input[4]
 
-class PlateauSize():
+class PlateauSize:
     def __init__(self, plateau):
         self.max_x = int(plateau[0])
         self.max_y = int(plateau[2])

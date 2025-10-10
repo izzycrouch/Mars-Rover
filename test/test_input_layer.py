@@ -1,185 +1,200 @@
 import pytest
 
-from input.input_layer import InputPlateau
-from input.input_layer import InputRover
-from input.input_layer import Instructions
-from input.input_layer import CompassDirection
-from input.input_layer import Position
-from input.input_layer import PlateauSize
+from input.input_layer import InputPlateau, InputRover, Instructions, Position, PlateauSize, CompassDirection
 
-# Test InputPlateau 1
-def test_plateau_class_with_valid_input():
-    test_p = InputPlateau('5 5')
-    assert test_p.make_input_valid() == '5 5'
 
-# Test InputPlateau 2
-def test_plateau_class_raises_error_with_incorrect_input():
-    # Input type - List
-    error_raised = False
-    try:
-        test_p = InputPlateau([55])
-    except TypeError:
-        error_raised = True
-    assert error_raised == True
-    # Input type - Dict
-    error_raised = False
-    try:
-        test_p = InputPlateau({'x': 5, 'y': 5})
-    except TypeError:
-        error_raised = True
-    assert error_raised == True
+class TestInputPlateau:
+    def test_plateau_class_with_valid_input(self):
+        test_p = InputPlateau('5 5')
+        assert test_p.make_input_valid() == '5 5'
 
-# Test InputPlateau 3
-def test_plateau_class_removes_characters_from_string_to_make_valid():
-    test_p = InputPlateau('PLATEAU5x5')
-    assert test_p.make_input_only_digits() == ['5','5']
-    assert test_p.make_input_valid() == '5 5'
+    def test_plateau_class_raises_error_with_incorrect_input(self):
+        # Input type - List
+        error_raised = False
+        try:
+            test_p = InputPlateau([55])
+        except TypeError:
+            error_raised = True
+        assert error_raised == True
+        # Input type - Dict
+        error_raised = False
+        try:
+            test_p = InputPlateau({'x': 5, 'y': 5})
+        except TypeError:
+            error_raised = True
+        assert error_raised == True
 
-# Test InputPlateau 4
-def test_plateau_class_raises_error_if_input_too_large():
-    test_p = InputPlateau('22 5')
-    error_raised = False
-    try:
-        test_p.make_input_only_digits()
-    except ValueError:
-        error_raised = True
-    assert error_raised == True
-    error_raised = False
-    try:
-        test_p.make_input_valid()
-    except ValueError:
-        error_raised = True
-    assert error_raised == True
+    def test_plateau_class_removes_characters_from_string_to_make_valid(self):
+        test_p = InputPlateau('PLATEAU5x5')
+        assert test_p.make_input_only_digits() == ['5','5']
+        assert test_p.make_input_valid() == '5 5'
 
-# Test InputRover 1
-def test_rover_name_is_string():
-    # Test valid name
-    test_r = InputRover('Rover1')
-    assert test_r.name == 'Rover1'
-    # Test invalid name - int
-    error_raised = False
-    try:
-        test_r = InputRover(123)
-    except TypeError:
-        error_raised = True
-    assert error_raised == True
-    # Test invalid name - list
-    error_raised = False
-    try:
-        test_r = InputRover(['Rover 1'])
-    except TypeError:
-        error_raised = True
-    assert error_raised == True
-    # Test invalid name - dict
-    error_raised = False
-    try:
-        test_r = InputRover({'Name': 'Rover1'})
-    except TypeError:
-        error_raised = True
-    assert error_raised == True
+    def test_plateau_class_raises_error_if_input_too_large(self):
+        test_p = InputPlateau('22 5')
+        error_raised = False
+        try:
+            test_p.make_input_only_digits()
+        except ValueError:
+            error_raised = True
+        assert error_raised == True
+        error_raised = False
+        try:
+            test_p.make_input_valid()
+        except ValueError:
+            error_raised = True
+        assert error_raised == True
 
-# Test InputRover 2
-def test_default_start_co_ordinates():
-    test_r = InputRover('Rover1')
-    assert test_r.start_position == '0 0 N'
+class TestInputRover:
+    def test_rover_name_is_string(self):
+        # Test valid name
+        test_r = InputRover('Rover1')
+        assert test_r.name == 'Rover1'
+        # Test invalid name - int
+        error_raised = False
+        try:
+            test_r = InputRover(123)
+        except TypeError:
+            error_raised = True
+        assert error_raised == True
+        # Test invalid name - list
+        error_raised = False
+        try:
+            test_r = InputRover(['Rover 1'])
+        except TypeError:
+            error_raised = True
+        assert error_raised == True
+        # Test invalid name - dict
+        error_raised = False
+        try:
+            test_r = InputRover({'Name': 'Rover1'})
+        except TypeError:
+            error_raised = True
+        assert error_raised == True
 
-# Test InputRover 3
-def test_start_co_ordinates_correct_when_provided():
-    test_r = InputRover('Rover1', '1 2 N')
-    assert test_r.start_position == '1 2 N'
+    def test_default_start_co_ordinates(self):
+        test_r = InputRover('Rover1')
+        assert test_r.start_position == '0 0 N'
 
-# Test InputRover 4
-def test_rover_name_is_valid():
-    # Test valid name returns name if valid
-    test_r = InputRover('Rover1')
-    assert test_r.get_valid_name() == 'Rover1'
-    # Test invalid name raises error - special characters
-    test_r = InputRover('Rover1!')
-    with pytest.raises(ValueError):
-        test_r.get_valid_name()
-        assert True
-    # Test invalid name raises error - length
-    test_r = InputRover('ad')
-    with pytest.raises(ValueError):
-        test_r.get_valid_name()
-        assert True
+    def test_start_co_ordinates_correct_when_provided(self):
+        test_r = InputRover('Rover1', '1 2 N')
+        assert test_r.start_position == '1 2 N'
 
-# Test InputRover 4
-def test_start_co_ordinates_raises_error_if_invalid():
-    test_r = InputRover('Rover1', '3 3')
-    assert test_r.get_valid_start_position() == '3 3 N'
+    def test_rover_name_is_valid(self):
+        # Test valid name returns name if valid
+        test_r = InputRover('Rover1')
+        assert test_r.get_valid_name() == 'Rover1'
+        # Test invalid name raises error - special characters
+        test_r = InputRover('Rover1!')
+        with pytest.raises(ValueError):
+            test_r.get_valid_name()
+            assert True
+        # Test invalid name raises error - length
+        test_r = InputRover('ad')
+        with pytest.raises(ValueError):
+            test_r.get_valid_name()
+            assert True
+
+    def test_start_co_ordinates_raises_error_if_invalid(self):
+        test_r = InputRover('Rover1', '3 3')
+        assert test_r.get_valid_start_position() == '3 3 N'
+        
+        test_r = InputRover('Rover1', '33N')
+        assert test_r.get_valid_start_position() == '3 3 N'
+
+        test_r = InputRover('Rover1', '3 3 N')
+        assert test_r.get_valid_start_position() == '3 3 N'
+
+        test_r = InputRover('Rover1', 'x3, y3, E')
+        with pytest.raises(ValueError):
+            test_r.get_valid_start_position()
+            assert True
+        
+        test_r = InputRover('Rover1', 'x3, y3, E')
+        with pytest.raises(ValueError):
+            test_r.get_valid_start_position()
+            assert True
+        
+        test_r = InputRover('Rover1', 'abc')
+        with pytest.raises(ValueError):
+            test_r.get_valid_start_position()
+            assert True
+        
+        test_r = InputRover('Rover1', '12c')
+        with pytest.raises(ValueError):
+            test_r.get_valid_start_position()
+            assert True
+        
+    def test_start_co_ordinates_in_plateau(self):
+        test_r = InputRover('Rover1', '1 2 N')
+        test_p = InputPlateau('5 5')
+        assert test_r.check_starting_postion_in_plateau(test_p) == True
+
+        test_r = InputRover('Rover1', '5 6 N')
+        test_p = InputPlateau('5 5')
+        with pytest.raises(ValueError):
+            test_r.check_starting_postion_in_plateau(test_p)
+            assert True
+        
+        test_r = InputRover('Rover1', '12 6 N')
+        test_p = InputPlateau('5 5')
+        with pytest.raises(ValueError):
+            test_r.check_starting_postion_in_plateau(test_p)
+            assert True
+
+class TestInstructions:
+    def test_instructions_raises_error(self):
+        instructions = 'LRMRVM'
+        with pytest.raises(ValueError):
+            for instruction in instructions:
+                Instructions(instruction)
     
-    test_r = InputRover('Rover1', '33N')
-    assert test_r.get_valid_start_position() == '3 3 N'
+    def test_instructions_equals_correct_command(self):
+        instructions = 'LRM'
+        expected_commands = [Instructions.LEFT, Instructions.RIGHT, Instructions.MOVE]
+        result = [Instructions(char) for char in instructions]
+        assert result == expected_commands
 
-    test_r = InputRover('Rover1', '3 3 N')
-    assert test_r.get_valid_start_position() == '3 3 N'
+class TestCompassDirections:
+    def test_compass_directions_raises_error(self):
+        direction = 'L'
+        with pytest.raises(ValueError):
+            CompassDirection(direction)
+    
+    def test_compass_direction_equals_correct_direction(self):
+        direction = 'N'
+        expected_direction = CompassDirection.NORTH
+        result = CompassDirection(direction)
+        assert result == expected_direction
 
-    test_r = InputRover('Rover1', 'x3, y3, E')
-    with pytest.raises(ValueError):
-        test_r.get_valid_start_position()
-        assert True
-    
-    test_r = InputRover('Rover1', 'x3, y3, E')
-    with pytest.raises(ValueError):
-        test_r.get_valid_start_position()
-        assert True
-    
-    test_r = InputRover('Rover1', 'abc')
-    with pytest.raises(ValueError):
-        test_r.get_valid_start_position()
-        assert True
-    
-    test_r = InputRover('Rover1', '12c')
-    with pytest.raises(ValueError):
-        test_r.get_valid_start_position()
-        assert True
-    
-# Test InputRover 4
-def test_start_co_ordinates_in_plateau():
-    test_r = InputRover('Rover1', '1 2 N')
-    test_p = InputPlateau('5 5')
-    assert test_r.check_starting_postion_in_plateau(test_p) == True
+class TestPosition:
+    def test_position(self):
+        pos = Position('1 2 N')
+        assert pos.x == 1
+        assert pos.y == 2
+        assert pos.d == 'N'
+        
+    def test_starting_position_of_rover_in_position(self):
+        test_r = InputRover('Rover1', '1 2 N')
+        start_position = test_r.get_valid_start_position()
+        pos = Position(start_position)
+        assert pos.x == 1
+        assert pos.y == 2
+        assert pos.d == 'N'
 
-    test_r = InputRover('Rover1', '5 6 N')
-    test_p = InputPlateau('5 5')
-    with pytest.raises(ValueError):
-        test_r.check_starting_postion_in_plateau(test_p)
-        assert True
-    
-    test_r = InputRover('Rover1', '12 6 N')
-    test_p = InputPlateau('5 5')
-    with pytest.raises(ValueError):
-        test_r.check_starting_postion_in_plateau(test_p)
-        assert True
+class TestPlateauSize:
+    def test_plateau_size(self):
+        plateau_size = PlateauSize('6 9')
+        assert plateau_size.max_x == 6
+        assert plateau_size.max_y == 9
 
-def test_position():
-    pos = Position('1 2 N')
-    assert pos.x == 1
-    assert pos.y == 2
-    assert pos.d == 'N'
-    
-def test_starting_position_of_rover_in_position():
-    test_r = InputRover('Rover1', '1 2 N')
-    start_position = test_r.get_valid_start_position()
-    pos = Position(start_position)
-    assert pos.x == 1
-    assert pos.y == 2
-    assert pos.d == 'N'
-
-def test_plateau_size():
-    plateau_size = PlateauSize('6 9')
-    assert plateau_size.max_x == 6
-    assert plateau_size.max_y == 9
-
-def test_plateau_size_from_input_plateau():
-    plateau = InputPlateau('55')
-    valid_plateau = plateau.make_input_valid()
-    plateau_size = PlateauSize(valid_plateau)
-    assert plateau_size.max_x == 5
-    assert plateau_size.max_y == 5
-    plateau = InputPlateau('5   5')
-    valid_plateau = plateau.make_input_valid()
-    plateau_size = PlateauSize(valid_plateau)
-    assert plateau_size.max_x == 5
-    assert plateau_size.max_y == 5
+    def test_plateau_size_from_input_plateau(self):
+        plateau = InputPlateau('55')
+        valid_plateau = plateau.make_input_valid()
+        plateau_size = PlateauSize(valid_plateau)
+        assert plateau_size.max_x == 5
+        assert plateau_size.max_y == 5
+        plateau = InputPlateau('5   5')
+        valid_plateau = plateau.make_input_valid()
+        plateau_size = PlateauSize(valid_plateau)
+        assert plateau_size.max_x == 5
+        assert plateau_size.max_y == 5
