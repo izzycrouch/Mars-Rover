@@ -1,7 +1,6 @@
 import pytest
 
-from input.input_parser import PlatueSizeParser, RoverParser, InstructionsParser
-#  PositionParser
+from input.input_parser import PlatueSizeParser, RoverParser, InstructionsParser, PositionParser
 
 class TestPlateauParser:
     def test_plateau_class_with_valid_input(self):
@@ -43,12 +42,10 @@ class TestRoverParser:
         test_r = RoverParser()
         with pytest.raises(ValueError):
             test_r.parse('Rover1!')
-            assert True
         # Test invalid name raises error - length
         test_r = RoverParser()
         with pytest.raises(ValueError):
             test_r.parse('ad')
-            assert True
 
 class TestInstructionsParser:
     def test_input_string_returns_upper(self):
@@ -58,3 +55,29 @@ class TestInstructionsParser:
     def test_input_string_ignores_incorrect_characters(self):
         test_i = InstructionsParser()
         assert  test_i.parse('lrmTHVDAKODMsrm') == 'LRMMRM'
+
+class TestPositionParser:
+    def test_when_no_direction_given_direction_defaults_to_N(self):
+        test_pos = PositionParser()
+        assert test_pos.parse('12') == (1, 2, 'N')
+    
+    def test_valid_input_string_returns_tuple(self):
+        test_pos = PositionParser()
+        assert test_pos.parse('12N') == (1, 2, 'N')
+    
+    def test_invalid_input_string_raises_error(self):
+        test_pos = PositionParser()
+        with pytest.raises(ValueError):
+            test_pos.parse('12K')
+
+        test_pos = PositionParser()
+        with pytest.raises(ValueError):
+            test_pos.parse('1EK')
+        
+        test_pos = PositionParser()
+        with pytest.raises(ValueError):
+            test_pos.parse('1')
+        
+        test_pos = PositionParser()
+        with pytest.raises(ValueError):
+            test_pos.parse('123W')
