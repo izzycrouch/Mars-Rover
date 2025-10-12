@@ -59,8 +59,33 @@ class TestRover:
             rover.check_rover_on_plateau(plateau)
     
     def test_rotate_method(self):
-        position = Position(0, 0, 'N')
+        position = Position(0, 0, CompassDirection.NORTH)
         rover = Rover('Rover1', position)
-        assert rover.rotate(CompassDirection.NORTH, Instructions.RIGHT) == CompassDirection.EAST
-        assert rover.rotate(CompassDirection.SOUTH, Instructions.MOVE) == CompassDirection.SOUTH
-        assert rover.rotate(CompassDirection.SOUTH, Instructions.LEFT) == CompassDirection.EAST
+        assert rover.rotate(Instructions.RIGHT) == CompassDirection.EAST
+        assert rover.rotate(Instructions.LEFT)== CompassDirection.NORTH
+    
+    def test_move_rover_method(self):
+        position = Position(0, 0, CompassDirection.NORTH)
+        rover = Rover('Rover1', position)
+        plateau = PlateauSize(5, 5)
+        rover.move_rover([Instructions.MOVE, Instructions.MOVE], plateau)
+        assert rover.position.x == 0
+        assert rover.position.y == 2
+        assert rover.position.d == CompassDirection.NORTH
+
+        position = Position(0, 0, CompassDirection.EAST)
+        rover = Rover('Rover1', position)
+        plateau = PlateauSize(5, 5)
+        rover.move_rover([Instructions.MOVE, Instructions.MOVE], plateau)
+        assert rover.position.x == 2
+        assert rover.position.y == 0
+        assert rover.position.d == CompassDirection.EAST
+
+    def test_move_rover_invokes_rotate_when_instructed(self):
+        position = Position(2, 2, CompassDirection.EAST)
+        rover = Rover('Rover1', position)
+        plateau = PlateauSize(5, 5)
+        rover.move_rover([Instructions.MOVE, Instructions.MOVE, Instructions.RIGHT, Instructions.MOVE], plateau)
+        assert rover.position.x == 4
+        assert rover.position.y == 1
+        assert rover.position.d == CompassDirection.SOUTH

@@ -1,31 +1,40 @@
 from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser
 from input.input_layer import Instructions, CompassDirection, Position, PlateauSize
+from logic.logic_layer import Rover
 
-parser = PlateauSizeParser()
-x, y = parser.parse('5 5')
+
+plateau_parser = PlateauSizeParser()
+x, y = plateau_parser.parse('5 5')
 plateau = PlateauSize(x, y)
 
 print(plateau)
 
-parser = InstructionsParser()
-instructions = parser.parse('lnjnsjjmsa')
-
-print(instructions)
-
-parser = PositionParser()
-x, y, d = parser.parse('12N')
+position_parser = PositionParser()
+x, y, d = position_parser.parse('12N')
+d = CompassDirection(d)
 position = Position(x, y, d)
 print(position)
 
+instructions_parser = InstructionsParser()
+instructions = instructions_parser.parse('LMLMLMLMM')
+print(instructions)
 
-# Rover Start Position 2
-    # def check_starting_postion_in_plateau(self, plateau):
-    #     start_position = self.get_valid_start_position()
-    #     plateau_coords = plateau.make_input_valid()
+rover = Rover('Rover1', position)
+rover.move_rover(instructions, plateau)
 
-    #     if int(start_position[0]) > int(plateau_coords[0]):
-    #         raise ValueError(f'{self.name}\'s starting x co-ordinate is not on Mars!')
-    #     if int(start_position[2]) > int(plateau_coords[2]):
-    #         raise ValueError(f'{self.name}\'s starting y co-ordinate is not on Mars!')
+print(rover.position)
 
-    #     return True
+position_parser2 = PositionParser()
+x, y, d = position_parser2.parse('33E')
+d = CompassDirection(d)
+position2 = Position(x, y, d)
+print(position2)
+
+instructions_parser2 = InstructionsParser()
+instructions2 = instructions_parser2.parse('MMRMMRMRRM')
+print(instructions2)
+
+rover2 = Rover('IzRov', position2)
+rover2.move_rover(instructions2, plateau)
+
+print(rover2.position)
