@@ -1,3 +1,21 @@
+from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser
+from input.input_layer import Instructions, CompassDirection, Position, PlateauSize
+
+parser = PlateauSizeParser()
+x, y = parser.parse('5 5')
+plateau = PlateauSize(x, y)
+
+print(plateau)
+
+parser = InstructionsParser()
+instructions = parser.parse('lnjnsjjmsa')
+
+print(instructions)
+
+parser = PositionParser()
+x, y, d = parser.parse('12N')
+position = Position(x, y, d)
+print(position)
 
 
 # Rover Start Position 2

@@ -1,5 +1,5 @@
 import pytest
-from input.input_layer import Instructions, Position, PlateauSize, CompassDirection
+from input.input_layer import Instructions, Position, PlateauSize, CompassDirection, Rover
 
 class TestInstructions:
     def test_instructions_raises_error(self):
@@ -38,3 +38,29 @@ class TestPlateauSize:
         plateau_size = PlateauSize(6, 9)
         assert plateau_size.max_x == 6
         assert plateau_size.max_y == 9
+
+class TestRover:
+    def test_rover_name_is_string(self):
+        # Test valid name
+        test_r = Rover('Rover1')
+        assert test_r.name == 'Rover1'
+        # Test invalid name - int
+        with pytest.raises(TypeError):
+            test_r = Rover(123)
+        # Test invalid name - list
+        with pytest.raises(TypeError):
+            test_r = Rover(['Rover 1'])
+        # Test invalid name - dict
+        with pytest.raises(TypeError):
+            test_r = Rover({'Name': 'Rover1'})
+
+    def test_rover_name_is_valid(self):
+        # Test valid name returns name if valid
+        test_r = Rover('Rover12')
+        assert test_r.name == 'Rover12'
+        # Test invalid name raises error - special characters
+        with pytest.raises(ValueError):
+            test_r = Rover('Rover1!')
+        # Test invalid name raises error - length
+        with pytest.raises(ValueError):
+            test_r = Rover('ad')
