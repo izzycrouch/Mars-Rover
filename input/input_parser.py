@@ -1,4 +1,4 @@
-# from input_layer import Instructions, CompassDirection, Position,PlateauSize
+from input.input_layer import Instructions
 
 class PlatueSizeParser:
     def parse(self, input_str):
@@ -26,14 +26,17 @@ class RoverParser:
         
         return self.name
 
-class  InstructionsParser:
+class InstructionsParser:
     def parse(self, input_str):
         # turns to correct case
         upper_str = input_str.upper()
         # ignores incorrect letters
-        valid_instructions = ['L', 'R', 'M']
-        valid_str = ''.join([character for character in upper_str if character in valid_instructions])
-        return valid_str
+        valid_instructions = []
+        for character in upper_str:
+            if character in Instructions:
+                valid_instructions.append(Instructions(character))
+      
+        return valid_instructions
 
 class PositionParser:
     def parse(self, input_str):
