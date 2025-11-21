@@ -54,30 +54,38 @@ class TestInstructionsParser:
         test_i = InstructionsParser()
         with pytest.raises(ValueError, match='Instructions not valid!'):
             test_i.parse('LRMTHVDAKODMRM')
-            
+
     
 class TestPositionParser:
-    def test_when_no_direction_given_direction_defaults_to_N(self):
+    def test_position_parser_when_no_direction_given_direction_defaults_to_N(self):
         test_pos = PositionParser()
-        assert test_pos.parse('12') == (1, 2, 'N')
+        assert test_pos.parse('1 2') == (1, 2, 'N')
     
-    def test_valid_input_string_returns_tuple(self):
+    def test_position_parser_returns_tuple_with_valid_input(self):
         test_pos = PositionParser()
-        assert test_pos.parse('12n') == (1, 2, 'N')
-    
-    def test_invalid_input_string_raises_error(self):
-        test_pos = PositionParser()
-        with pytest.raises(ValueError):
-            test_pos.parse('12K')
+        result = test_pos.parse('1 2 n')
+        assert isinstance(result, tuple)
+        assert result == (1, 2, 'N')
 
+    def test_position_parser_returns_tuple_with_larger_valid_input(self):
+        test_pos = PositionParser()
+        result = test_pos.parse('25 25 E')
+        assert result == (25, 25, 'E')
+    
+    def test_position_parser_raises_error_if_direction_not_valid(self):
+        test_pos = PositionParser()
+        with pytest.raises(ValueError, match='Invalid direction, please input N or S or E or W!'):
+            test_pos.parse('1 2 K')
+
+    def test_position_parser_raises_error_for_invalid_inputs(self):
         test_pos = PositionParser()
         with pytest.raises(ValueError):
-            test_pos.parse('1EK')
+            test_pos.parse('1 E K')
         
         test_pos = PositionParser()
         with pytest.raises(ValueError):
+            test_pos.parse('12N')
+        
+        test_pos = PositionParser()
+        with pytest.raises(ValueError, match='Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.'):
             test_pos.parse('1')
-        
-        test_pos = PositionParser()
-        with pytest.raises(ValueError):
-            test_pos.parse('123W')

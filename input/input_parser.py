@@ -56,25 +56,32 @@ class InstructionsParser:
       
         return valid_instructions
 
+
 class PositionParser:
     def parse(self, input_str):
         # position makes N default facing direction if only co-ordinates inputted
-        if len(input_str) == 2 and input_str.isdigit():    
-            position = [int(input_str[0]), int(input_str[1]), 'N']
-            return tuple(position)
+        try:
+            split_input = split_string = input_str.split(' ')
+        except:
+            raise ValueError('Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.')
+        
+        if len(split_input) == 2 and split_input[0].isdigit() and split_input[1].isdigit():    
+            X, y, d = [int(split_input[0]), int(split_input[1]), 'N']
+            return (X, y, d)
             
-        # position checks 2 values are digits if 3 characters inputted
-        elif len(input_str) == 3:
-            co_ordinates = input_str[0:2]
-            direction = input_str[2]
+        # position checks 2 values are digits if 3 values inputted
+        elif len(split_input) == 3:
+            
             valid_directions = ['N', 'S', 'E', 'W']
-            if not co_ordinates.isdigit():
+            
+            if not split_input[0].isdigit() and split_input[1].isdigit():
                 raise ValueError('Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.')
-            elif not direction.upper() in valid_directions:
+            
+            elif not split_input[2].upper() in valid_directions:
                 raise ValueError('Invalid direction, please input N or S or E or W!')
             else:
-                valid_output_list = [int(co_ordinates[0]), int(co_ordinates[1]), direction.upper()]
-                return tuple(valid_output_list)
-        # returns error if any other length string is inputted
+                X, y, d = [int(split_input[0]), int(split_input[1]), split_input[2].upper()]
+                return (X, y, d)
+        
         else:
             raise ValueError('Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.')
