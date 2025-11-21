@@ -10,11 +10,20 @@ class TestPlateauParser:
 
     def test_plateau_class_works_with_larger_inputs(self):
         plateau = PlateauSizeParser()
-        assert plateau.parse('10 7') == (10, 7)
+        assert plateau.parse('10 25') == (10, 25)
 
-    def test_plateau_class_removes_characters_from_string_to_make_valid_if_plateau_in_input(self):
+    def test_plateau_class_removes_characters_from_valid_string_to_result_in_output(self):
         plateau = PlateauSizeParser()
         assert plateau.parse('PLATEAU5x5') == (5, 5)
+    
+    def test_plateau_class_removes_characters_from_valid_string_to_result_in_output_with_larger_sizes(self):
+        plateau = PlateauSizeParser()
+        assert plateau.parse('PLATEAU10x5') == (10, 5)
+    
+    def test_plateau_class_raises_error_if_input_string_is_one_number(self):
+        plateau = PlateauSizeParser()
+        with pytest.raises(ValueError):
+            plateau.parse('11')
     
     def test_plateau_class_raises_error_if_input_string_has_random_characters(self):
         plateau = PlateauSizeParser()
