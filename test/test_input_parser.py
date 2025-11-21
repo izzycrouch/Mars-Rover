@@ -22,23 +22,40 @@ class TestPlateauParser:
     
     def test_plateau_class_raises_error_if_input_string_is_one_number(self):
         plateau = PlateauSizeParser()
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match= 'Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\''):
             plateau.parse('11')
     
     def test_plateau_class_raises_error_if_input_string_has_random_characters(self):
         plateau = PlateauSizeParser()
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match= 'Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\''):
             plateau.parse('size = 10 7')
+    
+    def test_plateau_class_raises_error_if_input_string_is_two_letters(self):
+        plateau = PlateauSizeParser()
+        with pytest.raises(ValueError, match= 'Plateau size must be numbers.'):
+            plateau.parse('a b')
+        
 
 class TestInstructionsParser:
-    def test_input_string_returns_upper(self):
+    def test_instruction_parser_returns_instructions_with_valid_input(self):
         test_i = InstructionsParser()
-        assert  test_i.parse('lrm') == [Instructions.LEFT, Instructions.RIGHT, Instructions.MOVE]
+        assert  test_i.parse('LRM') == [Instructions.LEFT, Instructions.RIGHT, Instructions.MOVE]
     
-    def test_input_string_ignores_incorrect_characters(self):
+    def test_input_string_ignores_white_spaces(self):
         test_i = InstructionsParser()
-        assert  test_i.parse('lrmTHVDAKODMsrm') == [Instructions.LEFT, Instructions.RIGHT, Instructions.MOVE, Instructions.MOVE, Instructions.RIGHT, Instructions.MOVE]
-
+        assert  test_i.parse('L R M') == [Instructions.LEFT, Instructions.RIGHT, Instructions.MOVE]
+    
+    def test_instruction_parser_raises_error_with_lower_case_instructions(self):
+        test_i = InstructionsParser()
+        with pytest.raises(ValueError, match='Instructions must be capitalised!'):
+            test_i.parse('lrm')
+    
+    def test_instruction_parser_raises_error_with_incorrect_characters(self):
+        test_i = InstructionsParser()
+        with pytest.raises(ValueError, match='Instructions not valid!'):
+            test_i.parse('LRMTHVDAKODMRM')
+            
+    
 class TestPositionParser:
     def test_when_no_direction_given_direction_defaults_to_N(self):
         test_pos = PositionParser()

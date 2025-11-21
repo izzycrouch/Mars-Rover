@@ -5,7 +5,7 @@ class PlateauSizeParser:
         if ' ' in input_str:
             split_string = input_str.split(' ')
             if len(split_string) != 2:
-                raise ValueError("Plateau size must be input as 'X Y'")
+                raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'')
             try:
                 X = int(split_string[0])
                 Y = int(split_string[1])
@@ -21,11 +21,11 @@ class PlateauSizeParser:
             if lower_input_str.startswith(prefix):
                 string_no_prefix = lower_input_str.replace(prefix, '')
                 if 'x' not in string_no_prefix:
-                    raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'' )
+                    raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'')
                 
                 split_string = string_no_prefix.split('x')
                 if len(split_string) != 2:
-                    raise ValueError("Plateau size must be input as 'X Y'")
+                    raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'')
                 
                 print(split_string)
                 try:
@@ -35,19 +35,24 @@ class PlateauSizeParser:
                     raise ValueError('Plateau size must be numbers.')
                 return (X, Y)
         
-        raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'' )
-        
+        raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'')        
         
 
 class InstructionsParser:
     def parse(self, input_str):
-        # turns to correct case
-        upper_str = input_str.upper()
-        # ignores incorrect letters
-        valid_instructions = []
-        for character in upper_str:
-            if character in Instructions:
+        # check input string is upper
+        if not input_str.isupper():
+            raise ValueError('Instructions must be capitalised!')        
+        
+        stripped_string = input_str.replace(' ', '')
+
+        # check only valid instructions given
+        try:
+            valid_instructions = []
+            for character in stripped_string:
                 valid_instructions.append(Instructions(character))
+        except: 
+            raise ValueError('Instructions not valid!')  
       
         return valid_instructions
 
