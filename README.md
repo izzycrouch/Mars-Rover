@@ -33,3 +33,9 @@ The Rover can only be moved around the Plateau by a string of letters send to it
  M -    Moves the Rover forward by one grid point, maintaining the same heading/orientation.
 ```
 All other letters are invalid.
+
+## How to Run
+ 1. Clone the repo.
+ 2. Set up and activate a virtual environment.
+ 3. Run pip install pytest.
+ 4. Run python main.py.
