@@ -8,14 +8,18 @@ class TestPlateauParser:
         plateau = PlateauSizeParser()
         assert plateau.parse('5 5') == (5, 5)
 
-    def test_plateau_class_raises_error_with_incorrect_input(self):
+    def test_plateau_class_works_with_larger_inputs(self):
         plateau = PlateauSizeParser()
-        with pytest.raises(ValueError):
-            plateau.parse('10 7')
+        assert plateau.parse('10 7') == (10, 7)
 
-    def test_plateau_class_removes_characters_from_string_to_make_valid(self):
+    def test_plateau_class_removes_characters_from_string_to_make_valid_if_plateau_in_input(self):
         plateau = PlateauSizeParser()
         assert plateau.parse('PLATEAU5x5') == (5, 5)
+    
+    def test_plateau_class_raises_error_if_input_string_has_random_characters(self):
+        plateau = PlateauSizeParser()
+        with pytest.raises(ValueError):
+            plateau.parse('size = 10 7')
 
 class TestInstructionsParser:
     def test_input_string_returns_upper(self):

@@ -2,13 +2,42 @@ from input.input_layer import Instructions, PlateauSize
 
 class PlateauSizeParser:
     def parse(self, input_str):
+        if ' ' in input_str:
+            split_string = input_str.split(' ')
+            if len(split_string) != 2:
+                raise ValueError("Plateau size must be input as 'X Y'")
+            try:
+                X = int(split_string[0])
+                Y = int(split_string[1])
+                print(X,Y)
+            except:
+                raise ValueError('Plateau size must be numbers.')
+            return (X, Y)
         
-        digits = [int(character) for character in input_str if character.isdigit()]
+        if not ' ' in input_str:
+            prefix = 'plateau'
+            lower_input_str = input_str.lower()
+
+            if lower_input_str.startswith(prefix):
+                string_no_prefix = lower_input_str.replace(prefix, '')
+                if 'x' not in string_no_prefix:
+                    raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'' )
+                
+                split_string = string_no_prefix.split('x')
+                if len(split_string) != 2:
+                    raise ValueError("Plateau size must be input as 'X Y'")
+                
+                print(split_string)
+                try:
+                    X = int(split_string[0])
+                    Y = int(split_string[1])
+                except:
+                    raise ValueError('Plateau size must be numbers.')
+                return (X, Y)
         
-        if not len(digits) == 2:
-            raise ValueError('Max plateau size is 9 x 9!')
+        raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'' )
         
-        return tuple(digits)
+        
 
 class InstructionsParser:
     def parse(self, input_str):

@@ -37,5 +37,5 @@ All other letters are invalid.
 ## How to Run
  1. Clone the repo.
  2. Set up and activate a virtual environment.
- 3. Run pip install pytest.
+ 3. Run pip install pytest. See requirements.txt for any additional packages that may be required.
  4. Run python main.py.
