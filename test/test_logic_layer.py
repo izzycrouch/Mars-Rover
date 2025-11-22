@@ -1,5 +1,5 @@
 import pytest
-from logic.logic_layer import Rover
+from logic.logic_layer import Rover, MoveResult
 from input.input_layer import Instructions, CompassDirection, Position, PlateauSize
 
 class TestRoverInit:
@@ -46,23 +46,23 @@ class TestRoverOnPlateau:
         position = Position(0, 0, 'N')
         rover = Rover(position)
         plateau = PlateauSize(5, 5)
-        assert rover.check_rover_on_plateau(plateau) == True
+        assert rover.check_rover_on_plateau(plateau) == MoveResult.SUCCESS
         
         position = Position(0, 5, 'N')
         rover = Rover(position)
         plateau = PlateauSize(5, 5)
-        assert rover.check_rover_on_plateau(plateau) == True
+        assert rover.check_rover_on_plateau(plateau) == MoveResult.SUCCESS
     
     def test_position_returns_false_if_not_on_plateau(self):
         position = Position(0, 6, 'N')
         rover = Rover(position)
         plateau = PlateauSize(5, 5)
-        assert rover.check_rover_on_plateau(plateau) == False
+        assert rover.check_rover_on_plateau(plateau) == MoveResult.FELL_OFF_PLATEAU
         
         position = Position(0, -1, 'N')
         rover = Rover(position)
         plateau = PlateauSize(5, 5)
-        assert rover.check_rover_on_plateau(plateau) == False
+        assert rover.check_rover_on_plateau(plateau) == MoveResult.FELL_OFF_PLATEAU
 
 class TestRoverRotate:    
     def test_rotate_method(self):
@@ -98,11 +98,9 @@ class TestMoveRover:
         assert rover.position.y == 1
         assert rover.position.d == CompassDirection.SOUTH
     
-    def test_move_returns_original_position_if_instructions_lead_it_off_the_plateau(self):
+    def test_move_returns_None_if_rover_fell_off_plateau(self):
         position = Position(3, 2, CompassDirection.EAST)
         rover = Rover(position)
         plateau = PlateauSize(5, 5)
         rover.move_rover([Instructions.MOVE, Instructions.MOVE, Instructions.MOVE], plateau)
-        assert rover.position.x == 3
-        assert rover.position.y == 2
-        assert rover.position.d == CompassDirection.EAST
+        assert rover.position == None

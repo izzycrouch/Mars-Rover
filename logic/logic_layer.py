@@ -1,5 +1,10 @@
 from input.input_layer import CompassDirection, Instructions, Position, PlateauSize
-import copy
+from enum import Enum
+
+class MoveResult(Enum):
+    SUCCESS = 'Success'
+    CRASHED = 'Crashed'
+    FELL_OFF_PLATEAU = 'Fell'
 
 class Rover:
     def __init__(self, position , input_name: str = 'Rover'):
@@ -30,10 +35,9 @@ class Rover:
             y_on_mars = True
         
         if x_on_mars and y_on_mars:
-            return True
+            return MoveResult.SUCCESS
         
-        return False
-    
+        return MoveResult.FELL_OFF_PLATEAU  
 
     def rotate(self, instruction):
         if instruction == Instructions.RIGHT:
@@ -61,7 +65,6 @@ class Rover:
         return self.position.d
     
     def move_rover(self, instructions, plateau):
-        start_position = copy.deepcopy(self.position)
         for instruction in instructions: 
             if instruction == Instructions.MOVE:
                 if self.position.d == CompassDirection.NORTH:
@@ -75,10 +78,10 @@ class Rover:
             else:
                 self.rotate(instruction)
          
-        if self.check_rover_on_plateau(plateau):
+        if self.check_rover_on_plateau(plateau) == MoveResult.SUCCESS:
             return self.position
-        else:
-            self.position = start_position
+        elif self.check_rover_on_plateau(plateau) == MoveResult.FELL_OFF_PLATEAU:
+            self.position = None
             return self.position
     
     
