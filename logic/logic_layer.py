@@ -1,4 +1,5 @@
 from input.input_layer import CompassDirection, Instructions, Position, PlateauSize
+import copy
 
 class Rover:
     def __init__(self, position , input_name: str = 'Rover'):
@@ -60,6 +61,7 @@ class Rover:
         return self.position.d
     
     def move_rover(self, instructions, plateau):
+        start_position = copy.deepcopy(self.position)
         for instruction in instructions: 
             if instruction == Instructions.MOVE:
                 if self.position.d == CompassDirection.NORTH:
@@ -74,6 +76,9 @@ class Rover:
                 self.rotate(instruction)
          
         if self.check_rover_on_plateau(plateau):
+            return self.position
+        else:
+            self.position = start_position
             return self.position
     
     

@@ -19,7 +19,7 @@ instructions_parser = InstructionsParser()
 instructions = instructions_parser.parse('LMLMLMLMM')
 print(instructions)
 
-rover = Rover('Rover1', position)
+rover = Rover(position=position)
 rover.move_rover(instructions, plateau)
 
 print(rover.position)
@@ -34,7 +34,7 @@ instructions_parser2 = InstructionsParser()
 instructions2 = instructions_parser2.parse('MMRMMRMRRM')
 print(instructions2)
 
-rover2 = Rover('IzRov', position2)
+rover2 = Rover(position=position2)
 rover2.move_rover(instructions2, plateau)
 
 print(rover2.position)

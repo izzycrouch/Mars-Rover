@@ -97,3 +97,12 @@ class TestMoveRover:
         assert rover.position.x == 4
         assert rover.position.y == 1
         assert rover.position.d == CompassDirection.SOUTH
+    
+    def test_move_returns_original_position_if_instructions_lead_it_off_the_plateau(self):
+        position = Position(3, 2, CompassDirection.EAST)
+        rover = Rover(position)
+        plateau = PlateauSize(5, 5)
+        rover.move_rover([Instructions.MOVE, Instructions.MOVE, Instructions.MOVE], plateau)
+        assert rover.position.x == 3
+        assert rover.position.y == 2
+        assert rover.position.d == CompassDirection.EAST
