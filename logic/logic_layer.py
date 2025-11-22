@@ -1,7 +1,7 @@
 from input.input_layer import CompassDirection, Instructions, Position, PlateauSize
 
 class Rover:
-    def __init__(self, input_name, position):
+    def __init__(self, position , input_name: str = 'Rover'):
         # check name can only be string
         if not isinstance(input_name, str):
             raise TypeError('Rover name not correct type!')
@@ -16,16 +16,23 @@ class Rover:
 
         if not isinstance(position, Position):
             raise TypeError('Position is not a valid position.')
-          
-        self.position = position
+        self.position = position  
+
 
     def check_rover_on_plateau(self, plateau):
-        if 0 > self.position.x or self.position.x > plateau.max_x:
-            raise ValueError(f'{self.name}\'s x co-ordinate is not on Mars!')
-        elif 0 > self.position.y or self.position.y > plateau.max_y:
-            raise ValueError(f'{self.name}\'s y co-ordinate is not on Mars!')
-        else:
+        x_on_mars = False
+        y_on_mars = False
+
+        if 0 <= self.position.x <= plateau.max_x:
+            x_on_mars = True
+        if 0 <= self.position.y <= plateau.max_y:
+            y_on_mars = True
+        
+        if x_on_mars and y_on_mars:
             return True
+        
+        return False
+    
 
     def rotate(self, instruction):
         if instruction == Instructions.RIGHT:
