@@ -1,6 +1,6 @@
 import pytest
 
-from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser
+from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser, RoverNameParser
 from input.input_layer import Instructions, PlateauSize
 
 class TestPlateauParser:
@@ -89,3 +89,37 @@ class TestPositionParser:
         test_pos = PositionParser()
         with pytest.raises(ValueError, match='Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.'):
             test_pos.parse('1')
+
+class TestRoverNameParser:
+    def test_rover_name_parser_returns_rover_name_with_valid_input(self):
+        test_r = RoverNameParser()
+        result = test_r.parse('Rover1')
+        assert result == 'Rover1'
+
+    def test_rover_name_parser_raises_error_if_input_name_is_not_valid_type(self):
+        test_r = RoverNameParser()
+        # Test invalid name - int
+        with pytest.raises(TypeError, match='Rover name not correct type!'):
+            test_r.parse(123)
+        # Test invalid name - list
+        with pytest.raises(TypeError, match='Rover name not correct type!'):
+            test_r.parse(['123'])
+    
+    def test_rover_name_parser_returns_None_if_no_input(self):
+        # Test default name
+        test_r = RoverNameParser()
+        result = test_r.parse('')
+        assert result == None   
+
+    def test_rover_name_parser_raises_error_with_invalid_characters(self):
+        # Test invalid name raises error - special characters
+        test_r = RoverNameParser()
+        with pytest.raises(ValueError, match='Valid Rover can only contain alphanumerics!'):
+            test_r.parse('Rover1!')
+    
+    def test_rover_name_parser_raises_error_with_invalid_input_length(self):   
+        test_r = RoverNameParser()
+        with pytest.raises(ValueError, match='Valid Rover names have to be between 3 and 8 characters long!'):
+            test_r.parse('ad')
+        with pytest.raises(ValueError, match='Valid Rover names have to be between 3 and 8 characters long!'):
+            test_r.parse('abcdefghi')

@@ -1,0 +1,18 @@
+INFO:
+
+ - Rovers navigate the surface of Mars by following a sequence of commands.
+
+ - The surface of Mars is represented by a Plateau.
+
+ - A rover's position on the Plateau will be represented by x and y co-ordinates and the letters N, S, W, E. 
+   Which will represent the direction the rover is facing (North, South, West and East respectively).
+
+ - The Rover takes a set of instructions to move on Mars.
+
+    L: Rotates the Rover 90 degrees anti-clockwise.
+    R: Rotates the Rover 90 degrees clockwise.
+    M: Moves the Rover forward by one point.
+
+HAVE FUN!!!!
+
+Now lets get this started!

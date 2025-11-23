@@ -6,18 +6,20 @@ class MoveResult(Enum):
     CRASHED = 'Crashed'
     FELL_OFF_PLATEAU = 'Fell'
 
+default_position = Position(0, 0, 'N')
+
 class Rover:
-    def __init__(self, position , input_name: str = 'Rover'):
-        # check name can only be string
-        if not isinstance(input_name, str):
-            raise TypeError('Rover name not correct type!')
-        # valid names have to be between 3 and 8 characters long
-        elif not 3 <= len(input_name) <= 8:
-            raise ValueError('Valid Rover names have to be between 3 and 8 characters long!')
-        # valid names can only be made up of alphanumerics
-        elif not input_name.isalnum():
-            raise ValueError('Valid Rover can only contain alphanumerics!')
-        
+    def __init__(self, position: Position =default_position , input_name: str = 'Rover'):
+        # # check name can only be string
+        # if not isinstance(input_name, str):
+        #     raise TypeError('Rover name not correct type!')
+        # # valid names have to be between 3 and 8 characters long
+        # elif not 3 <= len(input_name) <= 8:
+        #     raise ValueError('Valid Rover names have to be between 3 and 8 characters long!')
+        # # valid names can only be made up of alphanumerics
+        # elif not input_name.isalnum():
+        #     raise ValueError('Valid Rover can only contain alphanumerics!')
+    
         self.name = input_name 
 
         if not isinstance(position, Position):

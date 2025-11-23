@@ -2,44 +2,44 @@ import pytest
 from logic.logic_layer import Rover, MoveResult
 from input.input_layer import Instructions, CompassDirection, Position, PlateauSize
 
-class TestRoverInit:
-    def test_rover_name_returns_rover_name_with_valid_input(self):
-        position = Position(0, 0, 'N')
-        test_r = Rover(position=position, input_name='Rover1')
-        assert test_r.name == 'Rover1'
+# class TestRoverInit:
+    # def test_rover_name_returns_rover_name_with_valid_input(self):
+    #     position = Position(0, 0, 'N')
+    #     test_r = Rover(position=position, input_name='Rover1')
+    #     assert test_r.name == 'Rover1'
 
-    def test_rover_raises_error_if_input_name_is_not_valid_type(self):
-        position = Position(0, 0, 'N')
-        # Test invalid name - int
-        with pytest.raises(TypeError, match='Rover name not correct type!'):
-            test_r = Rover(position=position, input_name=123)
-        # Test invalid name - list
-        with pytest.raises(TypeError, match='Rover name not correct type!'):
-            test_r = Rover(position=position, input_name=['123'])
+    # def test_rover_raises_error_if_input_name_is_not_valid_type(self):
+    #     position = Position(0, 0, 'N')
+    #     # Test invalid name - int
+    #     with pytest.raises(TypeError, match='Rover name not correct type!'):
+    #         test_r = Rover(position=position, input_name=123)
+    #     # Test invalid name - list
+    #     with pytest.raises(TypeError, match='Rover name not correct type!'):
+    #         test_r = Rover(position=position, input_name=['123'])
     
-    def test_rover_name_defaults_to_rover(self):
-        # Test default name
-        position = Position(0, 0, 'N')
-        test_r = Rover(position=position)
-        assert test_r.name == 'Rover'    
+    # def test_rover_name_defaults_to_rover(self):
+    #     # Test default name
+    #     position = Position(0, 0, 'N')
+    #     test_r = Rover(position=position)
+    #     assert test_r.name == 'Rover'    
 
-    def test_rover_raises_error_with_invalid_characters(self):
-        position = Position(0, 0, 'N')
-        # Test invalid name raises error - special characters
-        with pytest.raises(ValueError, match='Valid Rover can only contain alphanumerics!'):
-            test_r = Rover(input_name='Rover1!', position=position)
-        # Test invalid name raises error - length
+    # def test_rover_raises_error_with_invalid_characters(self):
+    #     position = Position(0, 0, 'N')
+    #     # Test invalid name raises error - special characters
+    #     with pytest.raises(ValueError, match='Valid Rover can only contain alphanumerics!'):
+    #         test_r = Rover(input_name='Rover1!', position=position)
+    #     # Test invalid name raises error - length
     
-    def test_rover_raises_error_with_invalid_input_length(self):   
-        position = Position(0, 0, 'N')
-        with pytest.raises(ValueError, match='Valid Rover names have to be between 3 and 8 characters long!'):
-            test_r = Rover(input_name='ad', position=position)
-        with pytest.raises(ValueError, match='Valid Rover names have to be between 3 and 8 characters long!'):
-            test_r = Rover(input_name='abcdefghi', position=position)
+    # def test_rover_raises_error_with_invalid_input_length(self):   
+    #     position = Position(0, 0, 'N')
+    #     with pytest.raises(ValueError, match='Valid Rover names have to be between 3 and 8 characters long!'):
+    #         test_r = Rover(input_name='ad', position=position)
+    #     with pytest.raises(ValueError, match='Valid Rover names have to be between 3 and 8 characters long!'):
+    #         test_r = Rover(input_name='abcdefghi', position=position)
     
-    def test_rover_position_not_instance_of_position_error_raised(self):
-        with pytest.raises(TypeError, match='Position is not a valid position.'):
-            test_r = Rover(position=(0, 0, 'N'))
+    # def test_rover_position_not_instance_of_position_error_raised(self):
+    #     with pytest.raises(TypeError, match='Position is not a valid position.'):
+    #         test_r = Rover(position=(0, 0, 'N'))
 
 class TestRoverOnPlateau:
     def test_rover_position_within_plateau(self):

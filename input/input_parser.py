@@ -9,7 +9,7 @@ class PlateauSizeParser:
             try:
                 X = int(split_string[0])
                 Y = int(split_string[1])
-                print(X,Y)
+        
             except:
                 raise ValueError('Plateau size must be numbers.')
             return (X, Y)
@@ -27,7 +27,6 @@ class PlateauSizeParser:
                 if len(split_string) != 2:
                     raise ValueError('Plateau size must be input as \'X Y\' or as \'PLATEAUXxY\'')
                 
-                print(split_string)
                 try:
                     X = int(split_string[0])
                     Y = int(split_string[1])
@@ -85,3 +84,21 @@ class PositionParser:
         
         else:
             raise ValueError('Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.')
+        
+class RoverNameParser:
+    def parse(self, input_str):
+        # check name can only be string
+        if not isinstance(input_str, str):
+            raise TypeError('Rover name not correct type!')
+        
+        #returns None if no input to allow default
+        if not input_str:
+            return None
+        # valid names have to be between 3 and 8 characters long
+        elif not 3 <= len(input_str) <= 8:
+            raise ValueError('Valid Rover names have to be between 3 and 8 characters long!')
+        # valid names can only be made up of alphanumerics
+        elif not input_str.isalnum():
+            raise ValueError('Valid Rover can only contain alphanumerics!')
+
+        return input_str
