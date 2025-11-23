@@ -1,6 +1,38 @@
-from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser
+from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser, RoverNameParser
 from input.input_layer import Instructions, CompassDirection, Position, PlateauSize
 from logic.logic_layer import Rover
+
+class TestRoverNameIntegration:
+    def test_rover_name_parser_and_rover_classes_integrate_together_with_valid_input(self):
+        rover_name_parser = RoverNameParser()
+        name = rover_name_parser.parse('Rover1')
+        test_r = Rover(input_name=name)
+        assert test_r.name == 'Rover1'
+
+    def test_rover_name_parser_and_rover_classes_integrate_together_to_set_default(self):
+        rover_name_parser = RoverNameParser()
+        name = rover_name_parser.parse('')
+        test_r = Rover(input_name=name)
+        assert test_r.name == 'Rover'
+
+class TestRoverStartPositionIntegration:
+    def test_position_parser_and_rover_classes_integrate_together_with_valid_input(self):
+        position_parser = PositionParser()
+        x,y,d = position_parser.parse('1 2 N')
+        start_position = Position(x,y,d)
+        test_r = Rover(position=start_position)
+        assert test_r.position.x == 1
+        assert test_r.position.y == 2
+        assert test_r.position.d == 'N'
+
+    def test_position_parser_and_rover_classes_integrate_together_to_set_default_start_position(self):
+        position_parser = PositionParser()
+        x, y, d = position_parser.parse('')
+        start_position = Position(x, y, d)
+        test_r = Rover(position=start_position)
+        assert test_r.position.x == 0
+        assert test_r.position.y == 0
+        assert test_r.position.d == 'N'
 
 class TestRoverIntegration1:
     def test_plateau_parser_and_plateau_size_classes_work_together_as_intended(self):

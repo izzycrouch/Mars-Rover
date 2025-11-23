@@ -89,6 +89,11 @@ class TestPositionParser:
         test_pos = PositionParser()
         with pytest.raises(ValueError, match='Position should be X Y D! Where X = x co-ordinate, Y = y co-ordinate, and D = direction.'):
             test_pos.parse('1')
+    
+    def test_position_parser_returns_default_for_no_input(self):
+        test_pos = PositionParser()
+        result = test_pos.parse('')
+        assert result == (0, 0, 'N')
 
 class TestRoverNameParser:
     def test_rover_name_parser_returns_rover_name_with_valid_input(self):

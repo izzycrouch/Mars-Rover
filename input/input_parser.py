@@ -58,6 +58,11 @@ class InstructionsParser:
 
 class PositionParser:
     def parse(self, input_str):
+        #allows for default
+        if not input_str:
+            X, y, d = [0, 0, 'N']
+            return (X, y, d)
+        
         # position makes N default facing direction if only co-ordinates inputted
         try:
             split_input = split_string = input_str.split(' ')
