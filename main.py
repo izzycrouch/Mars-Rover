@@ -1,4 +1,4 @@
-from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser
+from input.input_parser import PlateauSizeParser, InstructionsParser, PositionParser, RoverNameParser
 from input.input_layer import Instructions, CompassDirection, Position, PlateauSize
 from logic.logic_layer import Rover
 
@@ -41,8 +41,8 @@ from logic.logic_layer import Rover
 
 import subprocess
 
-def activate_mars_rover():
-    subprocess.run(["./start-up-script.sh", 
+def start_up_message():
+    return subprocess.run(["./start-up-script.sh", 
                 "arguments"], shell=True)
 
 
@@ -65,18 +65,50 @@ def generate_plateau():
             print('Try again!')
         else:
             break
+    
+    return plateau
+
 
 def generate_rover():
-    print('\nWhat would you like to call your Rover?')
-    print('Note: Must be between 3 and 8 characters long and only consist of alphanumericals.\n')
+    while True:
+        print('\nWhat would you like to call your Rover?')
+        print('Note: Must be between 3 and 8 characters long and only consist of alphanumericals.\n')
+        
+        rover_name = input()
+        rover_name_parser = RoverNameParser()
+        try:
+            name = rover_name_parser.parse(rover_name)
+        except ValueError as e:
+            print(f'\nERROR: {e}')
+            print('Try again!')
+        else:
+            break
     
-    rover_name = input()
+    while True:
+        
+        print('\nWhat position would you your Rover to start at?')
+        print('Note: input as X Y D. (X = x co-ordinate, Y = y co-ordinate, and D = direction)\n')
+        
+        start_position = input()
+        position_parser = PositionParser()
 
-    print('\nWhat position would you your Rover to start at?')
-    print('Note: input as X Y D. (X = x co-ordinate, Y = y co-ordinate, and D = direction)\n')
-    position = input()
+        try:
+            x, y, d = position_parser.parse(start_position)
+            position = Position(x, y, d)
+        except ValueError as e:
+            print(f'\nERROR: {e}')
+            print('Try again!')
+        else:
+            break
+    
+    rover = Rover(input_name=name, position=position)
+    return rover
 
 
-# activate_mars_rover()
-generate_plateau()
-generate_rover()
+
+def activate_mars_rover():
+    # start_up_message()
+    plateau = generate_plateau()
+    rover = generate_rover()
+
+activate_mars_rover()
